@@ -1,0 +1,33 @@
+CREATE DATABASE car_management;
+
+CREATE TABLE User (
+    id SERIAL PRIMARY KEY,                     -- ID người dùng (tự động tăng)
+    username VARCHAR(80) UNIQUE NOT NULL,      -- Tên đăng nhập (duy nhất)
+    password VARCHAR(120) NOT NULL,            -- Mật khẩu
+    email VARCHAR(120) UNIQUE NOT NULL,        -- Email (duy nhất)
+    role VARCHAR(20) NOT NULL DEFAULT 'user'   -- Vai trò ('user' mặc định)
+);
+
+
+CREATE TABLE Car (
+    id SERIAL PRIMARY KEY,                     -- ID xe (tự động tăng)
+    brand VARCHAR(50) NOT NULL,                -- Thương hiệu xe
+    model VARCHAR(50) NOT NULL,                -- Mô hình xe
+    year INT NOT NULL,                         -- Năm sản xuất
+    price FLOAT NOT NULL,                      -- Giá xe
+    description TEXT,                          -- Mô tả
+    status VARCHAR(20) DEFAULT 'available',    -- Trạng thái xe ('available' mặc định)
+    created_at TIMESTAMP DEFAULT NOW(),        -- Ngày tạo (mặc định là thời gian hiện tại)
+    image_url VARCHAR(200)                     -- URL hình ảnh
+);
+
+
+CREATE TABLE Sale (
+    id SERIAL PRIMARY KEY,                     -- ID giao dịch (tự động tăng)
+    car_id INT NOT NULL,                       -- ID xe (liên kết đến bảng Car)
+    user_id INT NOT NULL,                      -- ID người dùng (liên kết đến bảng User)
+    sale_date TIMESTAMP DEFAULT NOW(),         -- Ngày giao dịch (mặc định là thời gian hiện tại)
+    price FLOAT NOT NULL,                      -- Giá bán
+    FOREIGN KEY (car_id) REFERENCES Car(id),   -- Liên kết đến bảng Car
+    FOREIGN KEY (user_id) REFERENCES User(id)  -- Liên kết đến bảng User
+);

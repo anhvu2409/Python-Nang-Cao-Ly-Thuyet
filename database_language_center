@@ -1,0 +1,50 @@
+-- Tạo cơ sở dữ liệu
+CREATE DATABASE language_center;
+
+-- Kết nối tới cơ sở dữ liệu
+\c language_center;
+
+-- Tạo bảng "Students" (Học viên)
+CREATE TABLE Students (
+    student_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15),
+    date_of_birth DATE,
+    address VARCHAR(255)
+);
+
+-- Tạo bảng "Teachers" (Giảng viên)
+CREATE TABLE Teachers (
+    teacher_id SERIAL PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100) UNIQUE,
+    phone VARCHAR(15)
+);
+
+-- Tạo bảng "Classes" (Lớp học)
+CREATE TABLE Classes (
+    class_id SERIAL PRIMARY KEY,
+    class_name VARCHAR(50),
+    teacher_id INT REFERENCES Teachers(teacher_id),
+    schedule VARCHAR(50), -- Lịch học
+    room VARCHAR(50) -- Phòng học
+);
+
+-- Tạo bảng "Registrations" (Đăng ký học)
+CREATE TABLE Registrations (
+    registration_id SERIAL PRIMARY KEY,
+    student_id INT REFERENCES Students(student_id),
+    class_id INT REFERENCES Classes(class_id),
+    registration_date DATE
+);
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL
+);
+
+
+INSERT INTO users (username, password) VALUES ('admin', 'admin123');
