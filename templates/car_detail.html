@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        {% if car.image_url %}
+        <img src="{{ car.image_url }}" class="img-fluid" alt="{{ car.brand }} {{ car.model }}">
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        <h2>{{ car.brand }} {{ car.model }}</h2>
+        <p><strong>Năm sản xuất:</strong> {{ car.year }}</p>
+        <p><strong>Giá bán:</strong> ${{ "%.2f"|format(car.price) }}</p>
+        <p><strong>Chi tiết xe:</strong></p>
+        <p>{{ car.description }}</p>
+        
+        {% if current_user.is_authenticated and car.status == 'available' %}
+        <form method="POST" action="{{ url_for('buy_car', car_id=car.id) }}">
+            <button type="submit" class="btn btn-success">Mua ngay</button>
+        </form>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

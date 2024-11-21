@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Doanh số bán xe - {{ current_month }}</h2>
+    
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4>Tổng hợp</h4>
+            <p>Tổng số xe đã bán: <strong>{{ total_cars }}</strong></p>
+            <p>Tổng doanh thu: <strong>${{ "%.2f"|format(total_revenue) }}</strong></p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h4>Chi tiết</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Thời gian</th>
+                        <th>Xe</th>
+                        <th>Dòng</th>
+                        <th>Giá</th>
+                        <th>Người mua</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale, car in monthly_sales %}
+                    <tr>
+                        <td>{{ sale.sale_date.strftime('%Y-%m-%d') }}</td>
+                        <td>{{ car.brand }}</td>
+                        <td>{{ car.model }}</td>
+                        <td>${{ "%.2f"|format(sale.price) }}</td>
+                        <td>{{ sale.user.username }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

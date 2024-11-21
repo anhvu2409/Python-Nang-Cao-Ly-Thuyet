@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>SẢN PHẨM ĐANG BÁN TẠI XEDEP.VN</h1>
+<div class="row">
+    {% for car in cars %}
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            {% if car.image_url %}
+            <img src="{{ car.image_url }}" class="card-img-top" alt="{{ car.brand }} {{ car.model }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ car.brand }} {{ car.model }}</h5>
+                <p class="card-text">
+                    Năm: {{ car.year }}<br>
+                    Giá: ${{ "%.2f"|format(car.price) }}
+                </p>
+                <a href="{{ url_for('car_detail', car_id=car.id) }}" class="btn btn-primary">Chi tiết</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

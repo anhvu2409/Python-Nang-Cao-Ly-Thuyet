@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Lịch sử mua xe</h2>
+    {% if sales %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Thương hiệu xe</th>
+                    <th>Dòng</th>
+                    <th>Giá</th>
+                    <th>Ngày mua</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sales %}
+                    <tr>
+                        <td>{{ sale.car.brand }} {{ sale.car.model }}</td>
+                        <td>{{ sale.car.model }}</td>
+                        <td>${{ sale.price }}</td>
+                        <td>{{ sale.sale_date.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Bạn chưa từng mua xe!</p>
+    {% endif %}
+{% endblock %}
